@@ -1,0 +1,71 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class jdbcins
+{
+    public static void main(String[] a)
+    {
+        try {
+            Scanner sc =new Scanner(System.in);
+            int sno = sc.nextInt();
+            String sname= sc.next();
+            double sper = sc.nextDouble();
+            // int no = Integer.parseInt(a[3]);
+            System.out.println("Student No = "+sno);
+            System.out.println("Student Name = "+sname);
+            System.out.println("Student Percentage = "+sper);
+
+            Class.forName("org.postgresql.Driver");
+            System.out.println("Driver Loaded...");
+
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/student1", "postgres", "123456");
+            System.out.println("Connection Established");
+
+            PreparedStatement ps = con.prepareStatement("insert into stud_table values(?,?,?)");
+            ps.setInt(1, sno);
+            ps.setString(2, sname);
+            ps.setDouble(3, (double) sper);
+            int i = ps.executeUpdate();
+            System.out.println("Value =" + i);
+            System.out.println("Insert Data Successfully...");
+
+            Statement st = con.createStatement();
+            System.out.println("Statement created....");
+
+            ResultSet rs = st.executeQuery("select * from stud_table");
+            System.out.println("Student No \t Student Name \t Student Per");
+            while (rs.next()) {
+                System.out.print(" " + rs.getInt(1));
+                System.out.print("\t\t\t " + rs.getString(2));
+                System.out.print("\t\t\t " + rs.getFloat(3));
+                System.out.println();
+            }
+            Statement st1 = con.createStatement();
+            System.out.println("Statement Created...");
+            ResultSet rs1 = st1.executeQuery("select * from stud_table where sno=7");
+            System.out.println("FOUND...");
+            System.out.println("Student No \t Student Name \t Student Per ");
+            while(rs1.next())
+            {
+                System.out.print(" "+rs1.getInt(1));
+                System.out.print("\t\t\t "+rs1.getString(2));
+                System.out.print("\t\t\t "+rs1.getFloat(3));
+                System.out.println();
+            }
+            Statement st2 = con.createStatement();
+            System.out.println("Statement Created...");
+            ResultSet rs2 = st2.executeQuery("select * from stud_table where sno=+ '"+sno+"'");
+            System.out.println("FOUND...");
+            System.out.println("Student No \t Student Name \t Student Per ");
+            while(rs2.next())
+            {
+                System.out.print(" "+rs2.getInt(1));
+                System.out.print("\t\t\t "+rs2.getString(2));
+                System.out.print("\t\t\t "+rs2.getFloat(3));
+                System.out.println();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
