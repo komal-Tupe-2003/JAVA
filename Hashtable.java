@@ -4,10 +4,10 @@ class hashtable
 public static void main(String args[])
 {
 Hashtable<String,String> ht = new Hashtable();
-ht.put("8149632509" ,"komal");
-ht.put("8149632508" ,"sana");
-ht.put("8149632507" ,"sans");
-ht.put("8149632506" ,"priti");
+ht.put("8149632509" ,"komal Tupe");
+ht.put("8149632508" ,"saniya shaikh");
+ht.put("8149632507" ,"sanskruti pawar");
+ht.put("8149632506" ,"priti patil");
 
 //System.out.println(ht);
 System.out.println("ht");
